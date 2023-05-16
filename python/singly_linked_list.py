@@ -136,7 +136,9 @@ class CircularLinkedList(LinkedList):
 
     def insert(self, data, pos: int) -> None:
         node = self.head.next
-        prevNode = self.lastNode
+        prevNode = node
+        while prevNode.next is not self.head.next:
+            prevNode = prevNode.next
         i = 1
         while i in range(pos):
             prevNode = node
@@ -164,5 +166,9 @@ class CircularLinkedList(LinkedList):
         return f"Linked List : {linkedList}"
 
 
-newLinkedList = CircularLinkedList("a", "b", "c", "d")
+newLinkedList = CircularLinkedList("a", "b", "c")
+newLinkedList.insert("z", 9)
+newLinkedList.push("d")
+newLinkedList.insert(1, 6)
+newLinkedList.pop()
 print(newLinkedList)
