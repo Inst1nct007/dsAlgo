@@ -96,5 +96,73 @@ class LinkedList:
         return f"Linked List : {linkedList}"
 
 
-newLinkedList = LinkedList("a", "d", "c", "d", "e", "f")
+class CircularLinkedList(LinkedList):
+    def __init__(self, *args) -> None:
+        self.head = Node(None)
+        prevNode = self.head
+        for i in args:
+            newNode = Node(i)
+            prevNode.next = newNode
+            newNode.next = self.head.next
+            prevNode = newNode
+
+    def push(self, data) -> None:
+        newNode = Node(data)
+        node = self.head.next
+        try:
+            while node.next is not self.head.next:
+                node = node.next
+            node.next = newNode
+            newNode.next = self.head.next
+        except:
+            self.head.next = newNode
+            newNode.next = self.head.next
+
+    def pop(self) -> None:
+        if self.head.next is None:
+            print("You cannot remove items from an empty linked list")
+        else:
+            node = self.head.next
+            prevNode = node
+            while node.next is not self.head.next:
+                prevNode = node
+                node = node.next
+            if prevNode.next is not self.head.next:
+                prevNode.next = node.next
+            else:
+                del prevNode
+                self.head.next = None
+            del node
+
+    def insert(self, data, pos: int) -> None:
+        node = self.head.next
+        prevNode = self.lastNode
+        i = 1
+        while i in range(pos):
+            prevNode = node
+            node = node.next
+            i += 1
+        newNode = Node(data)
+        newNode.next = prevNode.next
+        prevNode.next = newNode
+        if i == 1:
+            self.head.next = newNode
+
+    def __str__(self):
+        nodes = []
+        node = self.head.next
+        i = 0
+        while node is not self.head.next or i == 0:
+            i += 1
+            try:
+                nodes.append(str(node.data))
+                node = node.next
+
+            except:
+                pass
+        linkedList = " -> ".join(nodes)
+        return f"Linked List : {linkedList}"
+
+
+newLinkedList = CircularLinkedList("a", "b", "c", "d")
 print(newLinkedList)
