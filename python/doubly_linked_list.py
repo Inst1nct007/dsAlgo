@@ -66,8 +66,17 @@ class DoublyLinkedList:
         finally:
             del lastNode
 
-    def search(self):
-        pass
+    def search(self, data):
+        node = self.head.next
+        i = 1
+        while node is not None:
+            if node.data == data:
+                print(f"{data} is in the position {i}")
+                break
+            i += 1
+            node = node.next
+        else:
+            print("The element isn't present inside the linked list")
 
     def __str__(self) -> str:
         nodes = []
@@ -145,6 +154,18 @@ class CircularDoublyLinkedList(DoublyLinkedList):
                 self.head.next = prevNode.next
         del lastNode
 
+    def search(self, data):
+        node = self.head.next
+        i = 1
+        while node is not self.head.next or i == 1:
+            if node.data == data:
+                print(f"{data} is in the position {i}")
+                break
+            i += 1
+            node = node.next
+        else:
+            print("The element isn't present inside the linked list")
+
     def __str__(self) -> str:
         nodes = []
         node = self.head.next
@@ -159,5 +180,6 @@ class CircularDoublyLinkedList(DoublyLinkedList):
         return " <=> ".join(nodes)
 
 
-newLinkedList = CircularDoublyLinkedList(1, 2, 3)
+newLinkedList = CircularDoublyLinkedList(2, 3, 4)
+newLinkedList.search(5)
 print(newLinkedList)
