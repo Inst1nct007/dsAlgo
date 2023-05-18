@@ -27,17 +27,44 @@ class DoublyLinkedList:
         lastNode.next = newNode
         newNode.next = None
 
-    def pushAt(self):
-        pass
-
-    def insert(self):
-        pass
+    def insert(self, data, pos):
+        newNode = Node(data)
+        prevNode = self.head
+        for i in range(1, pos):
+            prevNode = prevNode.next
+        try:
+            newNode.next = prevNode.next
+            newNode.prev = prevNode
+            prevNode.next = newNode
+        except:
+            print("You cannot insert data outside the linked list")
 
     def pop(self):
-        pass
+        lastNode = self.head
+        prevNode = lastNode
+        while lastNode.next is not None:
+            prevNode = lastNode
+            lastNode = lastNode.next
 
-    def popAt(self):
-        pass
+        prevNode.next = None
+        del lastNode
+
+    def popAt(self, pos):
+        lastNode = self.head
+        prevNode = lastNode
+        for i in range(pos):
+            prevNode = lastNode
+            lastNode = lastNode.next
+        try:
+            prevNode.next = lastNode.next
+        except:
+            print("You cannot remove an item from outside the linked list")
+        try:
+            lastNode.next.prev = prevNode
+        except:
+            pass
+        finally:
+            del lastNode
 
     def __str__(self) -> str:
         nodes = []
@@ -46,10 +73,3 @@ class DoublyLinkedList:
             nodes.append(str(node.data))
             node = node.next
         return " <-> ".join(nodes)
-
-
-newLinkedList = DoublyLinkedList(2, 3, 5, "a", "c")
-print(newLinkedList)
-newLinkedList.push("d")
-newLinkedList.push("f")
-print(newLinkedList)
