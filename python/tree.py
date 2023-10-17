@@ -21,6 +21,36 @@ class Tree:
                 node.right = Node(data)
             else:
                 self.__createNode(node.right, data)
+                
+    def inorderTraverse(self, currentNode) -> None:
+
+        if currentNode.left != None:
+            self.inorderTraverse(currentNode.left)
+
+        print(currentNode.data)
+
+        if currentNode.right != None:
+            self.inorderTraverse(currentNode.right)
+
+    def preorderTraverse(self, currentNode):
+        print(currentNode.data)
+
+        if currentNode.left != None:
+            self.inorderTraverse(currentNode.left)
+
+        if currentNode.right != None:
+            self.inorderTraverse(currentNode.right)
+
+
+    def postorderTraverse(self, currentNode):
+        
+        if currentNode.right != None:
+            self.inorderTraverse(currentNode.right)
+
+        print(currentNode.data)
+
+        if currentNode.left != None:
+            self.inorderTraverse(currentNode.left)
         
 
 
