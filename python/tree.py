@@ -102,6 +102,24 @@ class Tree:
                 node.left = self.deleteInorderPredecessor(node.left, self.searchMax(node.left).data)
                 return node
 
+    def deleteInorderSuccessor(self, node, data):
+        if data < node.data:
+            node.left = self.deleteInorderSuccessor(node.left, data)
+            return node
+        elif data > node.data:
+            node.right = self.deleteInorderSuccessor(node.right, data)
+            return node
+        else:
+            if node.left == None:
+                return node.right
+            elif node.right == None:
+                return node.left
+            elif node.left != None and node.right != None:
+                node.data = self.searchMin(node.right).data
+                node.right = self.deleteInorderSuccessor(node.right, self.searchMin(node.right).data)
+                return node
+            
+
     def inorderTraverse(self, currentNode) -> None:
 
         if currentNode.left != None:
@@ -113,7 +131,4 @@ class Tree:
             self.inorderTraverse(currentNode.right)
 
 
-x = Tree(5, 2, 10, 8, 15, 12, 20, 30, 6, 9, 7)
-
-x.deleteInorderPredecessor(x.firstNode, 15)
-print(x.firstNode.right.right.right.data)
+x = Tree(5, 2, 10, 8, 15, 13, 20, 30, 6, 9, 7, 14, 12)
