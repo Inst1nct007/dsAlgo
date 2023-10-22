@@ -8,19 +8,19 @@ class Tree:
     def __init__(self, *args) -> None:
         self.firstNode = Node(args[0])
         for i in range(1, len(args)):
-            self.__createNode(self.firstNode, args[i])
+            self.insert(self.firstNode, args[i])
 
-    def __createNode(self, node, data):
+    def insert(self, node, data):
         if data <= node.data:
             if node.left == None:
                 node.left = Node(data)
             else:
-                self.__createNode(node.left, data)
+                self.insert(node.left, data)
         else:
             if node.right == None:
                 node.right = Node(data)
             else:
-                self.__createNode(node.right, data)
+                self.insert(node.right, data)
 
     def search(self, node, data):
 
