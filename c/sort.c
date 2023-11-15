@@ -3,10 +3,11 @@
 
 int* selectionSort(int* arr, int size);
 int* bubbleSort(int* arr, int size);
+int* insertionSort(int* arr, int size);
 
 void main() {
     int* arr = allocateArray();
-    int* sortedArr = bubbleSort(arr + 1, *arr);
+    int* sortedArr = insertionSort(arr + 1, *arr);
     printArray(sortedArr, *arr);
 }
 
@@ -32,8 +33,21 @@ int* bubbleSort(int* arr, int size) {
         for(int j = 0; j < size - i - 1; j++) {
             if (arr[j] > arr[j + 1]) {
                 arr[j] = arr[j] + arr[j + 1];
-                arr[j+1] = arr[j] - arr[j + 1];
+                arr[j + 1] = arr[j] - arr[j + 1];
                 arr[j] = arr[j] - arr[j + 1];
+            }
+        }
+    }
+    return arr;
+}
+
+int* insertionSort(int* arr, int size) {
+    for(int i = 0; i < size; i++) {
+        for(int j = i; j > 0; j--) {
+            if (arr[j] < arr[j - 1]) {
+                arr[j] = arr[j] + arr[j - 1];
+                arr[j - 1] = arr[j] - arr[j - 1];
+                arr[j] = arr[j] - arr[j - 1];
             }
         }
     }
