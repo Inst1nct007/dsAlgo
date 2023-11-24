@@ -6,12 +6,47 @@ int* bubbleSort(int* arr, int size);
 int* insertionSort(int* arr, int size);
 void mergeSort(int arr[], int left, int right);
 void merge(int arr[], int left, int mid, int right);
+void quickSort(int* arr, int start, int pivot);
 
 void main() {
     int* arr = allocateArray(); // returns an array arr[0] is always the size of arr, the actual array starts from arr[1]
-    int* sortedArr = bubbleSort(arr + 1, *arr);
-    // mergeSort(arr + 1, 0, *arr - 1);
-    printArray(sortedArr, *arr);
+    quickSort(arr + 1, 0, *arr);
+    printArray(arr+1, *arr);
+}
+
+void quickSort(int* arr, int start, int end) {
+    int pivot = end - 1, pos = start, i;
+    for(i = start; i < pivot; i++) {
+        if(arr[i] < arr[pivot]) {
+            pos++;
+        }
+    }
+    if(pos != pivot) {
+        arr[pos] += arr[pivot];
+        arr[pivot] = arr[pos] - arr[pivot];
+        arr[pos] -= arr[pivot];
+    }
+    pivot = pos;
+    i = start;
+    pos = pivot + 1;
+    while(i < pivot) {
+        if(arr[i] > arr[pivot] && arr[pos] <= arr[pivot]) {
+            arr[i] += arr[pos];
+            arr[pos] = arr[i] - arr[pos];
+            arr[i] -= arr[pos];
+        }
+        else if (arr[i] > arr[pivot] && arr[pos] > arr[pivot]) {
+            pos++;
+            i--;
+        }
+        i++;
+    }
+    if((pivot - start) > 1) {
+        quickSort(arr, start, pivot);
+    }
+    if((end - pivot) > 1){
+        quickSort(arr, pivot + 1, end);
+    }
 }
 
 int* selectionSort(int* arr, int size) {
@@ -60,11 +95,11 @@ int* insertionSort(int* arr, int size) {
 void mergeSort(int arr[], int left, int right) 
 { 
     if (left < right) { 
-        int mid = left + (right - left) / 2; 
+        int mid = (left + right) / 2; 
         mergeSort(arr, left, mid); // merge sort the left array
         mergeSort(arr, mid + 1, right); // merge sort the right array
         merge(arr, left, mid, right); // merge the left and the right sub arrays
-    } 
+    }
 }
 
 void merge(int arr[], int left, int mid, int right) 
